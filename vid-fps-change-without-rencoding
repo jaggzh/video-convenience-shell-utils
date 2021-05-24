@@ -1,0 +1,40 @@
+#!/bin/bash
+promptsecs=5
+myname="${0##*/}"
+if [[ "$#" -lt 2 ]]; then
+	cat <<-EOT
+		Usage: $myname vid.ext rate#
+		  Change FPS of video without reencoding
+		Ex: $myname ./foo.mp4 25
+		    Creates ./foo-25.mp4
+	EOT
+	exit
+fi
+inf="$1"
+newfps="$2"
+oldumask=$(umask)
+
+# Muster up a temp file:
+while true; do tmpf="/tmp/fps-change-$RANDOM.h264"; [[ ! -f "$tmpf" ]] && break; done
+
+outf="${inf%.*}"-"$2"."${inf##*.}"
+echo
+echo "      Making final file: $outf"
+echo " Intermediate temp file: $tmpf"
+read -t "$promptsecs" -p "K? ($promptsecs secs) (Y/n)" ans
+if [[ "$ans" = n || "$ans" = N ]]; then
+	echo 'Aborting, because you asked me to.'
+else
+	cat <<-EOT
+		Executing:
+			ffmpeg -i "$inf" -vf "fps=fps=$newfps" "$outf"
+	EOT
+	#ffmpeg -i "$inf" -vf "fps=fps=$newfps" "$outf"
+	ffmpeg -y -i "$inf" -c copy -f h264 "$tmpf"
+	ffmpeg -y -r "$newfps" -i "$tmpf" -c copy "$outf"
+	echo "Removing temp file: $tmpf"
+	rm "$tmpf"
+	echo
+	echo " Input: $inf"
+	echo "Output: $outf"
+fi
