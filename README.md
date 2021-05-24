@@ -1,7 +1,14 @@
 # Miscellaneous video utilities for use from CLI
 
-Most are bash but some are python.
-I'm starting with just one though. :}
+Some are bash, some python, some perl.
+I'm just starting with this one bash script.
+
+# Background
+
+I like my fingers and joints and time.  I don't like remembering ffmpeg options and, in general, have learned to start putting almost anything I need, repeatedly, into scripts.
+
+I give them long names, that make sense to me, for tab completion.
+(Example: `vid-<tab>` (looking...) `vid-fps<tab>`)
 
 # Usage:
 
