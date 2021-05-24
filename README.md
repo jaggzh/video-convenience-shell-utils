@@ -12,3 +12,5 @@ I'm starting with just one though. :}
   cd ~/bin
   ln -s /path/to/cloned/repos/video-convenience-shell-utils/vid-fps-change-without-rencoding
   ```
+
+Copyright jaggz.h {somewhat near} gmail.com, 2021. But, really it's GPL 3.0 so whatever?
